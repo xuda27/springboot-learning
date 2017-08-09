@@ -1,0 +1,5 @@
+home:
+  province: zhejiang
+  city: jiaxing
+  area: tongxiang
+  description: I am from ${home.province}, ${home.city}, ${home.area}.
