@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import cn.eden.springboot.domain.Area;
 import cn.eden.springboot.domain.AreaExample;
+import cn.eden.springboot.domain.AreaExample.Criteria;
 import cn.eden.springboot.mapper.AreaMapper;
 import cn.eden.springboot.service.AreaService;
 /**
@@ -21,8 +22,10 @@ public class AreaServiceImpl implements AreaService {
 	private AreaMapper areaMapper;
 	
 	@Override
-	public List<Area> getAreaList(Area Area) {
+	public List<Area> getAreaList(Area area) {
 		AreaExample example = new AreaExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andCityEqualTo(area.getCity());
 		List<Area> list = areaMapper.selectByExample(example);
 		return list;
 	}
