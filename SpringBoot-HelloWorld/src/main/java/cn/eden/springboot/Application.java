@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Spring boot 启动类
+ * 
  * @author eden
  *
  */
