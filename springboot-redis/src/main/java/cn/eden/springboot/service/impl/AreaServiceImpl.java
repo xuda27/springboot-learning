@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +29,8 @@ public class AreaServiceImpl implements AreaService {
 	private AreaMapper areaMapper;
 	
 	@Autowired
-    private RedisTemplate<String, Area> redisTemplate;
+    private StringRedisTemplate redisTemplate;
+	
 	
 	@Override
 	public List<Area> getAreaList(Area area) {
@@ -43,13 +44,13 @@ public class AreaServiceImpl implements AreaService {
 	@Override
 	public Area getAreaById(Integer id) {
 		Boolean hasArea = redisTemplate.hasKey("Area:id:" + id);
-		ValueOperations<String, Area> ops = redisTemplate.opsForValue();
+		ValueOperations ops = redisTemplate.opsForValue();
 		if (hasArea) {
-			Area area = ops.get("Area:id:" + id);
+			Area area = (Area) ops.get("Area:id:" + id);
 			return area;
 		}
 		Area area = areaMapper.selectByPrimaryKey(id);
-		ops.set("Area:id:", area, 10, TimeUnit.MINUTES);
+		ops.set("Area:id:" + id, area.toString(), 10, TimeUnit.MINUTES);
 		return area;
 	}
 

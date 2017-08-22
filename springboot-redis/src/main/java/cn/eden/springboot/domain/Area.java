@@ -1,11 +1,17 @@
 package cn.eden.springboot.domain;
+
+import java.io.Serializable;
+
 /**
  * 地区实现类
  * @author Eden
  *
  */
-public class Area {
-    private Integer id;
+public class Area implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
 
     private String province;
 
